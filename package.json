@@ -1,0 +1,71 @@
+{
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "author": "azu",
+  "license": "MIT",
+  "files": [
+    "bin/",
+    "lib/",
+    "src/"
+  ],
+  "name": "git-commit-push-via-github-api",
+  "version": "1.0.0",
+  "description": "Git commit and push by using GitHub API. No depended Git binary.",
+  "main": "lib/git-commit-push-via-github-api.js",
+  "scripts": {
+    "preexample": "npm run build",
+    "example": "DEBUG=git-commit-push-via-github-api node example/example.js",
+    "test": "mocha 'test/**/*.ts'",
+    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
+    "precommit": "lint-staged",
+    "postcommit": "git reset",
+    "build": "cross-env NODE_ENV=production tsc -p .",
+    "watch": "tsc -p . --watch",
+    "prepublish": "npm run --if-present build"
+  },
+  "keywords": [
+    "git",
+    "github",
+    "commit",
+    "push",
+    "api",
+    "lambda"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azu/git-commit-push-via-github-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azu/git-commit-push-via-github-api/issues"
+  },
+  "homepage": "https://github.com/azu/git-commit-push-via-github-api",
+  "devDependencies": {
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.46",
+    "cross-env": "^5.1.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.3.0",
+    "mocha": "^4.0.1",
+    "prettier": "^1.7.4",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.3"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 4
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "types": "lib/git-commit-push-via-github-api.d.ts",
+  "dependencies": {
+    "@types/debug": "^0.0.30",
+    "debug": "^3.1.0",
+    "github": "^11.0.0"
+  }
+}
