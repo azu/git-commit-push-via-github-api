@@ -5,7 +5,7 @@ if (!process.env.GITHUB_API_TOKEN) {
     throw new Error("GITHUB_API_TOKEN=xxx node example.js");
 }
 gitCommitPush({
-    user: "azu",
+    owner: "azu",
     repo: "commit-to-github-test",
     files: [
         { path: "README.md", content: fs.readFileSync(__dirname + "/README.md", "utf-8") },
@@ -14,9 +14,9 @@ gitCommitPush({
         { path: "next-item.mp3", content: fs.readFileSync(__dirname + "/next-item.mp3") },
         { path: "image.png", content: fs.readFileSync(__dirname + "/image.png") }
     ],
-    fullyQualifiedRef: "heads/master", //optional default = "heads/dev"
+    fullyQualifiedRef: "heads/master",
     forceUpdate: false, //optional default = false
-    commitMessage: "HELLOW" //option default = "AutoCommit - " + new Date().getTime().toString();
+    commitMessage: "HELLO" //option default = "AutoCommit - " + new Date().getTime().toString();
 })
     .then(res => {
         console.log("success", res);

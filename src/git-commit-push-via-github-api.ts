@@ -6,7 +6,7 @@ const getReferenceCommit = function(github: GitHubApi, options: GitCommitPushOpt
     return new Promise((resolve, reject) => {
         github.gitdata.getReference(
             {
-                owner: options.user,
+                owner: options.owner,
                 repo: options.repo,
                 ref: options.fullyQualifiedRef
             },
@@ -28,7 +28,7 @@ const createTree = function(github: GitHubApi, options: GitCommitPushOptions, da
             if (typeof file.path === "string" && typeof file.content === "string") {
                 return github.gitdata
                     .createBlob({
-                        owner: options.user,
+                        owner: options.owner,
                         repo: options.repo,
                         content: file.content,
                         encoding: "utf-8"
@@ -44,7 +44,7 @@ const createTree = function(github: GitHubApi, options: GitCommitPushOptions, da
             } else if (typeof file.path === "string" && Buffer.isBuffer(file.content)) {
                 return github.gitdata
                     .createBlob({
-                        owner: options.user,
+                        owner: options.owner,
                         repo: options.repo,
                         content: file.content.toString("base64"),
                         encoding: "base64"
@@ -65,7 +65,7 @@ const createTree = function(github: GitHubApi, options: GitCommitPushOptions, da
             // TODO: d.ts bug?
             github.gitdata.createTree(
                 {
-                    owner: options.user,
+                    owner: options.owner,
                     repo: options.repo,
                     tree: files,
                     base_tree: data.referenceCommitSha
@@ -87,7 +87,7 @@ const createCommit = function(github: GitHubApi, options: GitCommitPushOptions, 
     return new Promise((resolve, reject) => {
         github.gitdata.createCommit(
             {
-                owner: options.user,
+                owner: options.owner,
                 repo: options.repo,
                 message: options.commitMessage || "commit",
                 tree: data.newTreeSha,
@@ -109,7 +109,7 @@ const updateReference = function(github: GitHubApi, options: GitCommitPushOption
     return new Promise((resolve, reject) => {
         github.gitdata.updateReference(
             {
-                owner: options.user,
+                owner: options.owner,
                 repo: options.repo,
                 ref: options.fullyQualifiedRef,
                 sha: data.newCommitSha,
@@ -128,7 +128,7 @@ const updateReference = function(github: GitHubApi, options: GitCommitPushOption
 };
 
 export interface GitCommitPushOptions {
-    user: string;
+    owner: string;
     repo: string;
     files: {
         path: string;
@@ -141,7 +141,7 @@ export interface GitCommitPushOptions {
 }
 
 export const gitCommitPush = (options: GitCommitPushOptions) => {
-    if (!options.user || !options.repo || !options.files || !options.files.length) {
+    if (!options.owner || !options.repo || !options.files || !options.files.length) {
         return "";
     }
     const token = options.token || GITHUB_API_TOKEN;
@@ -156,7 +156,7 @@ export const gitCommitPush = (options: GitCommitPushOptions) => {
         });
     }
     const filledOptions = {
-        user: options.user,
+        owner: options.owner,
         repo: options.repo,
         files: options.files,
         fullyQualifiedRef: options.fullyQualifiedRef || "heads/dev",
