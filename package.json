@@ -17,7 +17,6 @@
   "scripts": {
     "preexample": "npm run build",
     "example": "DEBUG=git-commit-push-via-github-api node example/example.js",
-    "test": "mocha 'test/**/*.ts'",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
     "precommit": "lint-staged",
     "postcommit": "git reset",
