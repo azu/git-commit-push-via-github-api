@@ -1,6 +1,8 @@
 # git-commit-push-via-github-api
 
-Git commit and push by using GitHub API. No depended Git binary.
+Git commit and push by using GitHub API.
+ 
+No depended on Git binary.
 
 ## Install
 
@@ -10,11 +12,45 @@ Install with [npm](https://www.npmjs.com/):
 
 ## Usage
 
-- [ ] Write usage instructions
+```js
+const fs = require("fs");
+const { gitCommitPush } = require("git-commit-push-via-github-api");
+process.on("unhandledRejection", console.dir);
+if (!process.env.GITHUB_API_TOKEN) {
+    throw new Error("GITHUB_API_TOKEN=xxx node example.js");
+}
+gitCommitPush({
+    user: "azu",
+    repo: "commit-to-github-test",
+    files: [
+        { path: "README.md", content: fs.readFileSync(__dirname + "/README.md", "utf-8") },
+        { path: "dir/input.txt", content: fs.readFileSync(__dirname + "/dir/input.txt", "utf-8") },
+        // Pass binary as Buffer
+        { path: "next-item.mp3", content: fs.readFileSync(__dirname + "/next-item.mp3") },
+        { path: "image.png", content: fs.readFileSync(__dirname + "/image.png") }
+    ],
+    fullyQualifiedRef: "heads/master", //optional default = "heads/dev"
+    forceUpdate: false, //optional default = false
+    commitMessage: "HELLOW" //option default = "AutoCommit - " + new Date().getTime().toString();
+})
+    .then(res => {
+        console.log("success", res);
+    })
+    .catch(err => {
+        console.error(err);
+    });
+```
+
+
+## Related 
+
+- [Ramshackle-Jamathon/commit-to-github: make commits to github without git, perfect for AWS lambda](https://github.com/Ramshackle-Jamathon/commit-to-github)
+- [wuzhizhe/uploadFileToGithub](https://github.com/wuzhizhe/uploadFileToGithub)
 
 ## Changelog
 
 See [Releases page](https://github.com/azu/git-commit-push-via-github-api/releases).
+
 
 ## Running tests
 
