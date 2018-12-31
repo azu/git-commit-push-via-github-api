@@ -1,4 +1,4 @@
-import * as GitHubApi from "github";
+import * as GitHubApi from "@octokit/rest";
 
 const debug = require("debug")("git-commit-push-via-github-api");
 const GITHUB_API_TOKEN = process.env.GITHUB_API_TOKEN;
