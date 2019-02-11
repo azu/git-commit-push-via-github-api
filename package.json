@@ -45,7 +45,7 @@
     "@types/node": "^8.0.46",
     "cross-env": "^5.1.0",
     "husky": "^0.14.3",
-    "lint-staged": "^4.3.0",
+    "lint-staged": "^8.1.0",
     "mocha": "^4.0.1",
     "prettier": "^1.7.4",
     "ts-node": "^3.3.0",
@@ -63,8 +63,8 @@
   },
   "types": "lib/git-commit-push-via-github-api.d.ts",
   "dependencies": {
+    "@octokit/rest": "^16.3.0",
     "@types/debug": "^0.0.30",
-    "debug": "^3.1.0",
-    "github": "^11.0.0"
+    "debug": "^3.1.0"
   }
 }

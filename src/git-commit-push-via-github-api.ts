@@ -1,10 +1,10 @@
-import * as GitHubApi from "github";
+import * as GitHubApi from "@octokit/rest";
 
 const debug = require("debug")("git-commit-push-via-github-api");
 const GITHUB_API_TOKEN = process.env.GITHUB_API_TOKEN;
 const getReferenceCommit = function(github: GitHubApi, options: GitCommitPushOptions) {
     return new Promise((resolve, reject) => {
-        github.gitdata.getReference(
+        github.git.getRef(
             {
                 owner: options.owner,
                 repo: options.repo,
@@ -26,7 +26,7 @@ const createTree = function(github: GitHubApi, options: GitCommitPushOptions, da
     return new Promise((resolve, reject) => {
         const promises = options.files.map(file => {
             if (typeof file.path === "string" && typeof file.content === "string") {
-                return github.gitdata
+                return github.git
                     .createBlob({
                         owner: options.owner,
                         repo: options.repo,
@@ -42,7 +42,7 @@ const createTree = function(github: GitHubApi, options: GitCommitPushOptions, da
                         };
                     });
             } else if (typeof file.path === "string" && Buffer.isBuffer(file.content)) {
-                return github.gitdata
+                return github.git
                     .createBlob({
                         owner: options.owner,
                         repo: options.repo,
@@ -63,7 +63,7 @@ const createTree = function(github: GitHubApi, options: GitCommitPushOptions, da
         return Promise.all(promises).then(files => {
             debug("files: %O", files);
             // TODO: d.ts bug?
-            github.gitdata.createTree(
+            github.git.createTree(
                 {
                     owner: options.owner,
                     repo: options.repo,
@@ -85,7 +85,7 @@ const createTree = function(github: GitHubApi, options: GitCommitPushOptions, da
 
 const createCommit = function(github: GitHubApi, options: GitCommitPushOptions, data: any) {
     return new Promise((resolve, reject) => {
-        github.gitdata.createCommit(
+        github.git.createCommit(
             {
                 owner: options.owner,
                 repo: options.repo,
@@ -107,7 +107,7 @@ const createCommit = function(github: GitHubApi, options: GitCommitPushOptions, 
 
 const updateReference = function(github: GitHubApi, options: GitCommitPushOptions, data: any) {
     return new Promise((resolve, reject) => {
-        github.gitdata.updateReference(
+        github.git.updateRef(
             {
                 owner: options.owner,
                 repo: options.repo,
