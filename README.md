@@ -1,3 +1,9 @@
+---
+
+## :memo: [Looking for Maintainer · Issue #12](https://github.com/azu/git-commit-push-via-github-api/issues/12)
+
+---
+
 # git-commit-push-via-github-api
 
 Git commit and push by using GitHub API.
